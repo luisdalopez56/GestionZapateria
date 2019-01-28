@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ProyectoZapateriaApplication<gestion-zapateria>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.iesvdc.acceso.ProyectoZapateriaApplication",
+            "projectName": "gestion-zapateria",
+            "args": ""
+        }
+    ]
+}
