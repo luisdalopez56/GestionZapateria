@@ -37,6 +37,9 @@ public class Controlador {
     RepositorioClientes repoClient;
 
     @Autowired
+    RepositorioProductos repoProductos;
+
+    @Autowired
     RepositorioCodPos repoCodPos;
 
     @Autowired
@@ -49,6 +52,7 @@ public class Controlador {
     public List<ProductoCategoria> getAllProductoCategoria(){
     	return repoProductoCategorias.findAll();
     }
+    
     
     
     // Get All Clientes
@@ -71,15 +75,25 @@ public class Controlador {
     public List<Cliente> getClienteByDni(@PathVariable(value = "dni") int dni) {
         return repoClient.findByDni(dni);
     }
+
+    // Get All Productos
+    @GetMapping("/producto")
+    public List<Producto> getAllProductos() {
+    return repoProductos.findAll();
+    }   
     
-    // Get a Single Client
-    @GetMapping("/cliente/{id}")
-    public Cliente getCliente(@PathVariable(value = "id") Long clienteId) {
-        return repoClient.findById(clienteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente", "id", clienteId));
+    // Get a Single Producto By id
+    @GetMapping("/producto/{id}")
+    public Producto getProductoById(@PathVariable(value = "id") Long productoId) {
+        return repoProductos.findById(productoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", productoId));
     }
     
-    
+    // Get products By Categoria
+    @GetMapping("/producto/{categoria}")
+    public List<Producto> getProductoByCategoria(@PathVariable(value = "id_categoria") String Id_categoria) {
+        return repoProductos.findByCategoria(Id_categoria);
+    }
 
     @PostMapping(value="/cliente", consumes={"application/json"})
     @ResponseBody public Cliente createCliente(@Valid @RequestBody Cliente cliente) {
@@ -150,6 +164,8 @@ public class Controlador {
         return cliente.getClienteDireccionList();
     }
 
+
+
     
     @PostMapping(
     			value="/cliente/{idCli}/direccion", 
@@ -178,9 +194,12 @@ public class Controlador {
 	Cliente cli = repoClient.findById(idCli).orElseThrow(() 
 			-> new ResourceNotFoundException("Cliente", "id", idCli));
 	
-	return cli.getClienteDireccionList();
+    return cli.getClienteDireccionList();
+    
+    
 }
     
+
     /*
     @DeleteMapping("/codpos/{cp}")
     public ResponseEntity<?> deleteCodPos2(@PathVariable(value = "cp") Long cp) {
