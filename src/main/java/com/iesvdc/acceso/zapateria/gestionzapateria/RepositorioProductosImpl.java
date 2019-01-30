@@ -26,4 +26,19 @@ public class RepositorioProductosImpl implements RepositorioProductosCustom {
         return query.getResultList();
     }
 
+    @Override
+    public List<Producto> findByCategoria(String categoria) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM zapateria.producto " +
+                "WHERE categoria LIKE ?", Producto.class);
+    		query.setParameter(1, categoria + "%");
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Producto> findAll() {
+        Query query = entityManager.createNativeQuery("SELECT * FROM zapateria.producto ", Producto.class);
+        return query.getResultList();
+    }
+
 }

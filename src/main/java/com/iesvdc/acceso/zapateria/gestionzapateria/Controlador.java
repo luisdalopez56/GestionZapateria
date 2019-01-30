@@ -46,15 +46,8 @@ public class Controlador {
     RepositorioClienteDireccion repoClienteDireccion;
     
     @Autowired
-    RepositorioProductoCategorias repoProductoCategorias;
+    RepositorioProductoIdioma repoProductoIdioma;
 
-    @GetMapping("/productocategoria")
-    public List<ProductoCategoria> getAllProductoCategoria(){
-    	return repoProductoCategorias.findAll();
-    }
-    
-    
-    
     // Get All Clientes
     @GetMapping("/cliente")
     public List<Cliente> getAllAlumnos() {
@@ -76,6 +69,8 @@ public class Controlador {
         return repoClient.findByDni(dni);
     }
 
+    //----------------------------------------------PRODUCTO----------------------------------------------
+
     // Get All Productos
     @GetMapping("/producto")
     public List<Producto> getAllProductos() {
@@ -89,11 +84,46 @@ public class Controlador {
                 .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", productoId));
     }
     
-    // Get products By Categoria
+    // Get productos By Categoria
     @GetMapping("/producto/{categoria}")
     public List<Producto> getProductoByCategoria(@PathVariable(value = "id_categoria") String Id_categoria) {
         return repoProductos.findByCategoria(Id_categoria);
     }
+
+    //Create new Producto
+    @PostMapping(value="/producto", consumes={"application/json"})
+    @ResponseBody public Producto createProducto(@Valid @RequestBody Producto producto) {
+        System.out.println("\n\n\nINTENTANDO GUARDAR producto ID="+producto.getId_producto());
+        return repoProductos.save(producto);
+    }
+
+    //-----------------------------------------------------------------------------------------------------
+
+    //------------------------------------------PRODUCTO IDIOMA-----------------------------------------
+
+    // Get All Producto_idioma
+    @GetMapping("/producto_idioma")
+    public List<ProductoIdioma> getProductoIdiomas() {
+    return repoProductoIdioma.findAll();
+    } 
+
+    // Get a Single Producto_Id By id
+    @GetMapping("/producto_idioma/{cod_idioma}")
+    public ProductoIdioma getProductoIdiomaById(@PathVariable(value = "id") Long productoId) {
+        return repoProductoIdioma.findById(productoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", productoId));
+    }
+
+    //Create new ProductoIdioma
+    @PostMapping(value="/producto_idioma", consumes={"application/json"})
+    @ResponseBody public ProductoIdioma createProductoIdioma(@Valid @RequestBody ProductoIdioma productoIdioma) {
+        System.out.println("\n\n\nINTENTANDO GUARDAR productoIdioma ID="+productoIdioma.getCod_idioma());
+        return repoProductoIdioma.save(productoIdioma);
+    }
+
+    //-----------------------------------------------------------------------------------------------------
+
+
 
     @PostMapping(value="/cliente", consumes={"application/json"})
     @ResponseBody public Cliente createCliente(@Valid @RequestBody Cliente cliente) {

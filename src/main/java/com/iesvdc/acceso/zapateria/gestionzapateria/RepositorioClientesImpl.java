@@ -26,4 +26,20 @@ public class RepositorioClientesImpl implements RepositorioClientesCustom {
         return query.getResultList();
     }
 
+    @Override
+    public List<Cliente> findByApellidos(String apellidos) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM zapateria.cliente " +
+                "WHERE apellidos LIKE ?", Cliente.class);
+    		query.setParameter(1, apellidos + "%");
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Cliente> findByDni(int dni) {
+        Query query = entityManager.createNativeQuery("SELECT * FROM zapateria.cliente " +
+                "WHERE dni LIKE ?", Cliente.class);
+    		query.setParameter(1, dni + "%");
+        return query.getResultList();
+    }
+
 }

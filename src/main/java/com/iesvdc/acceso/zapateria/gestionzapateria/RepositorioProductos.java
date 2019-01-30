@@ -18,9 +18,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepositorioProductos extends JpaRepository<Producto, Long> {
 
-	// Con un repo custom
-	List<Producto> findById(String id);
-	// Con namedQueries
+	List<Producto> findAll();
+	List<Producto> findById(@Param("id") String id);
 	List<Producto> findByCategoria(@Param("categoria") String categoria);
  
 }

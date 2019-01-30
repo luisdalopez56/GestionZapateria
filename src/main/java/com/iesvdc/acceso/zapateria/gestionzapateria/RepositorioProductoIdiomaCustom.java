@@ -10,12 +10,11 @@ import java.util.List;
 
 /**
  *
- * @author profesor
+ * @author Luisda
  */
-public interface RepositorioClientesCustom  {
+public interface RepositorioProductoIdiomaCustom  {
 
-	List<Cliente> findByNombre(String nombre);
-	List<Cliente> findByApellidos(String apellidos);
-	List<Cliente> findByDni(int dni);
+	List<ProductoIdioma> findAll();
+	List<ProductoIdioma> findById(String id);
 
 }

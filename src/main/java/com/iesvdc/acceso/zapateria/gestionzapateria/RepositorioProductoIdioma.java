@@ -13,13 +13,12 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author profesor
+ * @author Luisda
  */
 @Repository
-public interface RepositorioClientes extends JpaRepository<Cliente, Long> {
+public interface RepositorioProductoIdioma extends JpaRepository<ProductoIdioma, Long> {
 
-	List<Cliente> findByNombre(@Param ("nombre") String nombre);
-	List<Cliente> findByApellidos(@Param("apellidos") String apellidos);
-	List<Cliente> findByDni(@Param("dni") int dni);
+	List<ProductoIdioma> findAll();
+	List<ProductoIdioma> findById(@Param("cod_idioma") String cod_idioma);
  
 }

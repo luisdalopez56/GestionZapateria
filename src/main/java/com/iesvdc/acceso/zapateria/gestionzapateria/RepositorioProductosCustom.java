@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface RepositorioProductosCustom  {
 
+	List<Producto> findAll();
 	List<Producto> findById(String id);
+	List<Producto> findByCategoria(String categoria);
 
 }

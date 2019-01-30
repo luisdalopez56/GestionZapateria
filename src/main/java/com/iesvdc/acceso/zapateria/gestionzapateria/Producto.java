@@ -40,10 +40,15 @@ public class Producto implements Serializable {
     @Column(nullable = false, length = 200)
     private String ruta_imagen;
     
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria", nullable = false)
     @ManyToOne(optional = false)
     @JsonBackReference
     private ProductoCategoria id_categoria;
+
+    @JoinColumn(name = "id_producto_idioma", referencedColumnName = "id_producto", nullable = false)
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private ProductoCategoria id_producto_idioma;
 
     public Producto() {
     }
