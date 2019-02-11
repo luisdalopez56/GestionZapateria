@@ -18,7 +18,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepositorioClientes extends JpaRepository<Cliente, Long> {
 
-	List<Cliente> findByNombre(@Param ("nombre") String nombre);
+	// Con un repo custom
+	List<Cliente> findByNombre(String nombre);
+	// Con namedQueries
 	List<Cliente> findByApellidos(@Param("apellidos") String apellidos);
 	List<Cliente> findByDni(@Param("dni") int dni);
  

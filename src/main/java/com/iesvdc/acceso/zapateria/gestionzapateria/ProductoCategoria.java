@@ -1,5 +1,6 @@
 package com.iesvdc.acceso.zapateria.gestionzapateria;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,6 +41,9 @@ public class ProductoCategoria implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false, length = 40)
     private String nombre;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+    @JsonBackReference
+    private List<Producto> productoCategoriaList = new ArrayList<Producto>();
     
     public ProductoCategoria() {
     	
@@ -60,6 +66,15 @@ public class ProductoCategoria implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public List<Producto> getProductoCategoriaList() {
+		return productoCategoriaList;
+	}
+
+	public void setProductoCategoriaList(List<Producto> productoCategoriaList) {
+		this.productoCategoriaList = productoCategoriaList;
+	}
+	
     
     
     

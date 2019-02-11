@@ -83,11 +83,11 @@ INSERT INTO producto(`id`,`ruta_imagen`,`categoria`) VALUES
 (5,NULL,2);
 
 CREATE TABLE `producto_idioma` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   cod_idioma VARCHAR(2) NOT NULL,
   nombre VARCHAR(40) NOT NULL,
   descripcion VARCHAR(80) NOT NULL,
-  id_producto INT REFERENCES producto(id) ON UPDATE CASCADE,
-  PRIMARY KEY(cod_idioma,id_producto)
+  id_producto INT REFERENCES producto(id) ON UPDATE CASCADE
 );
 
 INSERT INTO producto_idioma(`cod_idioma`,`nombre`,`descripcion`,`id_producto`) VALUES

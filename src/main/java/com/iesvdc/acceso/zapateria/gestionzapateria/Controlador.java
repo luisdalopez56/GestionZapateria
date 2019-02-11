@@ -37,17 +37,58 @@ public class Controlador {
     RepositorioClientes repoClient;
 
     @Autowired
-    RepositorioProductos repoProductos;
-
-    @Autowired
     RepositorioCodPos repoCodPos;
 
     @Autowired
     RepositorioClienteDireccion repoClienteDireccion;
     
     @Autowired
-    RepositorioProductoIdioma repoProductoIdioma;
-
+    RepositorioProductoCategorias repoProductoCategorias;
+    
+    @Autowired
+    RepositorioProductos repoProduct;
+    
+    @Autowired
+    RepositorioProductoIdiomas repoProductIdiomas;
+    
+    
+    //PRODUCTO
+    @GetMapping("/producto")
+    public List<Producto> getAllProducto(){
+    	return repoProduct.findAll();
+    }
+    
+    @GetMapping("/producto/{id}")
+    public Producto getProducto(@PathVariable(value = "id") Long categoriaId) {
+        return repoProduct.findById(categoriaId).
+        		orElseThrow(() -> new ResourceNotFoundException("Producto", "id", categoriaId)); 
+    }
+    
+    
+    //PRODUCTO IDIOMA
+    @GetMapping("/productoidioma")
+    public List<ProductoIdioma> getAllProductoIdioma(){
+    	return repoProductIdiomas.findAll();
+    }
+    
+    @GetMapping("/productoidioma/{id}")
+    public ProductoIdioma getProductoIdioma(@PathVariable(value = "id") Long productoIdiomaId) {
+        return repoProductIdiomas.findById(productoIdiomaId).
+        		orElseThrow(() -> new ResourceNotFoundException("ProductoIdioma", "id", productoIdiomaId)); 
+    }
+    
+    //PRODUCTO CATEGORIA
+    @GetMapping("/productocategoria")
+    public List<ProductoCategoria> getAllProductoCategoria(){
+    	return repoProductoCategorias.findAll();
+    }
+    
+    @GetMapping("/productocategoria/{id}")
+    public ProductoCategoria getProductoCategoria(@PathVariable(value = "id") Long productoCategoriaId) {
+        return repoProductoCategorias.findById(productoCategoriaId).
+        		orElseThrow(() -> new ResourceNotFoundException("ProductoCategoria", "id", productoCategoriaId)); 
+    }
+    
     // Get All Clientes
     @GetMapping("/cliente")
     public List<Cliente> getAllAlumnos() {
@@ -68,62 +109,15 @@ public class Controlador {
     public List<Cliente> getClienteByDni(@PathVariable(value = "dni") int dni) {
         return repoClient.findByDni(dni);
     }
-
-    //----------------------------------------------PRODUCTO----------------------------------------------
-
-    // Get All Productos
-    @GetMapping("/producto")
-    public List<Producto> getAllProductos() {
-    return repoProductos.findAll();
-    }   
     
-    // Get a Single Producto By id
-    @GetMapping("/producto/{id}")
-    public Producto getProductoById(@PathVariable(value = "id") Long productoId) {
-        return repoProductos.findById(productoId)
-                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", productoId));
+    // Get a Single Client
+    @GetMapping("/cliente/{id}")
+    public Cliente getCliente(@PathVariable(value = "id") Long clienteId) {
+        return repoClient.findById(clienteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", "id", clienteId));
     }
     
-    // Get productos By Categoria
-    @GetMapping("/producto/{categoria}")
-    public List<Producto> getProductoByCategoria(@PathVariable(value = "id_categoria") String Id_categoria) {
-        return repoProductos.findByCategoria(Id_categoria);
-    }
-
-    //Create new Producto
-    @PostMapping(value="/producto", consumes={"application/json"})
-    @ResponseBody public Producto createProducto(@Valid @RequestBody Producto producto) {
-        System.out.println("\n\n\nINTENTANDO GUARDAR producto ID="+producto.getId_producto());
-        return repoProductos.save(producto);
-    }
-
-    //-----------------------------------------------------------------------------------------------------
-
-    //------------------------------------------PRODUCTO IDIOMA-----------------------------------------
-
-    // Get All Producto_idioma
-    @GetMapping("/producto_idioma")
-    public List<ProductoIdioma> getProductoIdiomas() {
-    return repoProductoIdioma.findAll();
-    } 
-
-    // Get a Single Producto_Id By id
-    @GetMapping("/producto_idioma/{cod_idioma}")
-    public ProductoIdioma getProductoIdiomaById(@PathVariable(value = "id") Long productoId) {
-        return repoProductoIdioma.findById(productoId)
-                .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", productoId));
-    }
-
-    //Create new ProductoIdioma
-    @PostMapping(value="/producto_idioma", consumes={"application/json"})
-    @ResponseBody public ProductoIdioma createProductoIdioma(@Valid @RequestBody ProductoIdioma productoIdioma) {
-        System.out.println("\n\n\nINTENTANDO GUARDAR productoIdioma ID="+productoIdioma.getCod_idioma());
-        return repoProductoIdioma.save(productoIdioma);
-    }
-
-    //-----------------------------------------------------------------------------------------------------
-
-
+    
 
     @PostMapping(value="/cliente", consumes={"application/json"})
     @ResponseBody public Cliente createCliente(@Valid @RequestBody Cliente cliente) {
@@ -194,8 +188,6 @@ public class Controlador {
         return cliente.getClienteDireccionList();
     }
 
-
-
     
     @PostMapping(
     			value="/cliente/{idCli}/direccion", 
@@ -224,12 +216,9 @@ public class Controlador {
 	Cliente cli = repoClient.findById(idCli).orElseThrow(() 
 			-> new ResourceNotFoundException("Cliente", "id", idCli));
 	
-    return cli.getClienteDireccionList();
-    
-    
+	return cli.getClienteDireccionList();
 }
     
-
     /*
     @DeleteMapping("/codpos/{cp}")
     public ResponseEntity<?> deleteCodPos2(@PathVariable(value = "cp") Long cp) {

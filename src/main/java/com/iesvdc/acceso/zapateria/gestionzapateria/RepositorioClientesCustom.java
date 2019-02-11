@@ -15,7 +15,5 @@ import java.util.List;
 public interface RepositorioClientesCustom  {
 
 	List<Cliente> findByNombre(String nombre);
-	List<Cliente> findByApellidos(String apellidos);
-	List<Cliente> findByDni(int dni);
 
 }
